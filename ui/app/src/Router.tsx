@@ -44,7 +44,7 @@ const GuardedProjectRoute = lazy(() => import('./guard/GuardedProjectRoute'));
 const ProjectView = lazy(() => import('./views/projects/ProjectView'));
 const CreateDashboardView = lazy(() => import('./views/projects/dashboards/CreateDashboardView'));
 const DashboardView = lazy(() => import('./views/projects/dashboards/DashboardView'));
-const ExploreView = lazy(() => import('./views/explore/ExploreView'));
+const ExploreView = lazy(() => import('./views/projects/explore/ExploreView'));
 const CreateEphemeralDashboardView = lazy(() => import('./views/projects/dashboards/CreateEphemeralDashboardView'));
 const EphemeralDashboardView = lazy(() => import('./views/projects/dashboards/EphemeralDashboardView'));
 const ProfileView = lazy(() => import('./views/profile/ProfileView'));
@@ -164,9 +164,9 @@ function Router(): ReactElement {
  */
 function RequireAuth({ children }: { children: ReactElement }): ReactElement | null {
   const isAuthEnabled = useIsAuthEnabled();
-  const isAuthenticated = useIsAccessTokenExist(isAuthEnabled);
+  const isAccessTokenExist = useIsAccessTokenExist();
   const location = useLocation();
-  if (!isAuthEnabled || isAuthenticated) {
+  if (!isAuthEnabled || isAccessTokenExist) {
     return children;
   }
   let to = SignInRoute;
